@@ -1,7 +1,9 @@
 #!/usr/bin/env php
 <?php
 
-class LaravelInstaller
+declare(strict_types=1);
+
+final class LaravelInstaller
 {
     private string $packageManager;
 
@@ -177,7 +179,7 @@ class LaravelInstaller
     {
         $answer = $this->ask($question.' ['.($default ? 'Y/n' : 'y/N').']');
 
-        return $answer ? strtolower($answer[0]) === 'y' : $default;
+        return $answer ? mb_strtolower($answer[0]) === 'y' : $default;
     }
 
     private function runCommand(string $command): void
@@ -203,7 +205,7 @@ class LaravelInstaller
 
     private function isWindows(): bool
     {
-        return strtoupper(substr(PHP_OS, 0, 3)) === 'WIN';
+        return mb_strtoupper(mb_substr(PHP_OS, 0, 3)) === 'WIN';
     }
 }
 

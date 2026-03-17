@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Admin\Resources\Admins\Schemas;
 
 use App\Filament\Schemas\Components\AdditionalInformation;
@@ -8,7 +10,7 @@ use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
-class AdminInfolist
+final class AdminInfolist
 {
     public static function configure(Schema $schema): Schema
     {

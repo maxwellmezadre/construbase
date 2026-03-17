@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Admin\Resources\Users;
 
 use App\Filament\Admin\Resources\Users\Pages\CreateUser;
@@ -19,7 +21,7 @@ use Illuminate\Support\Facades\Cache;
 
 use function __;
 
-class UserResource extends Resource
+final class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
@@ -54,12 +56,12 @@ class UserResource extends Resource
         return __('Users');
     }
 
-    public static function getNavigationGroup(): ?string
+    public static function getNavigationGroup(): string
     {
         return __('User');
     }
 
-    public static function getNavigationBadge(): ?string
+    public static function getNavigationBadge(): string
     {
         return (string) Cache::rememberForever('users_count', fn () => User::query()->count());
     }

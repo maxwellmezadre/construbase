@@ -22,6 +22,7 @@ This application is a Laravel application and its main Laravel ecosystems packag
 - laravel/sail (SAIL) - v1
 - pestphp/pest (PEST) - v4
 - phpunit/phpunit (PHPUNIT) - v12
+- rector/rector (RECTOR) - v2
 - tailwindcss (TAILWINDCSS) - v4
 
 ## Skills Activation
@@ -54,6 +55,20 @@ This project has domain-specific skills available. You MUST activate the relevan
 ## Documentation Files
 
 - You must only create documentation files if explicitly requested by the user.
+
+## Before Every Commit
+
+Run these commands in order and fix all errors before committing:
+
+```bash
+vendor/bin/rector process --no-progress-bar
+vendor/bin/pint --config=pint.json
+vendor/bin/phpstan analyse --no-progress
+```
+
+- Rector: refactors code automatically — just run it
+- Pint: formats code automatically — just run it
+- PHPStan: fix every error it reports; do not suppress with baselines or `@phpstan-ignore`
 
 ## Git Commits
 

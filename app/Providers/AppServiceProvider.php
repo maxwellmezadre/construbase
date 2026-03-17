@@ -1,20 +1,38 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers;
 
 use App\Providers\Filament\AdminPanelProvider;
 use App\Providers\Filament\AppPanelProvider;
 use App\Providers\Filament\GuestPanelProvider;
-use Filament\Actions;
-use Filament\Forms;
-use Filament\Infolists;
-use Filament\Notifications;
-use Filament\Pages;
-use Filament\Schemas;
+use Filament\Actions\Action;
+use Filament\Actions\ActionGroup;
+use Filament\Actions\CreateAction;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
+use Filament\Forms\Components\Builder;
+use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\Field;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\ToggleButtons;
+use Filament\Infolists\Components\Entry;
+use Filament\Notifications\Notification;
+use Filament\Pages\Page;
+use Filament\Schemas\Schema;
 use Filament\Support\Enums\Width;
 use Filament\Support\Facades\FilamentView;
 use Filament\Support\Icons\Heroicon;
-use Filament\Tables;
+use Filament\Tables\Columns\Column;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Table;
 use Filament\View\PanelsRenderHook;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
@@ -25,7 +43,7 @@ use Illuminate\Validation\ValidationException;
 
 use function view;
 
-class AppServiceProvider extends ServiceProvider
+final class AppServiceProvider extends ServiceProvider
 {
     /**
      * Register any application services.
@@ -35,15 +53,19 @@ class AppServiceProvider extends ServiceProvider
         if (config('filakit.admin_panel_enabled', false)) {
             $this->app->register(AdminPanelProvider::class);
         }
+
         if (config('filakit.app_panel_enabled', false)) {
             $this->app->register(AppPanelProvider::class);
         }
+
         if (config('filakit.guest_panel_enabled', false)) {
             $this->app->register(GuestPanelProvider::class);
         }
+
         if (config('filakit.favicon.enabled')) {
             FilamentView::registerRenderHook(PanelsRenderHook::HEAD_START, fn (): View => view('components.favicon'));
         }
+
         FilamentView::registerRenderHook(PanelsRenderHook::HEAD_START, fn (): View => view('components.js-md5'));
     }
 
@@ -69,39 +91,39 @@ class AppServiceProvider extends ServiceProvider
 
     private function configureActions(): void
     {
-        Actions\ActionGroup::configureUsing(function (Actions\ActionGroup $action) {
+        ActionGroup::configureUsing(function (ActionGroup $action): ActionGroup {
             return $action->icon(Heroicon::EllipsisVertical);
         });
 
-        Actions\Action::configureUsing(function (Actions\Action $action) {
+        Action::configureUsing(function (Action $action): Action {
             return $action
                 ->translateLabel()
                 ->modalWidth(Width::Medium)
                 ->closeModalByClickingAway(false);
         });
 
-        Actions\CreateAction::configureUsing(function (Actions\CreateAction $action) {
+        CreateAction::configureUsing(function (CreateAction $action): CreateAction {
             return $action
                 ->icon(Heroicon::Plus)
                 ->hiddenLabel()
                 ->createAnother(false);
         });
 
-        Actions\EditAction::configureUsing(function (Actions\EditAction $action) {
+        EditAction::configureUsing(function (EditAction $action): EditAction {
             return $action
                 ->icon(Heroicon::PencilSquare)
                 ->hiddenLabel()
                 ->button();
         });
 
-        Actions\DeleteAction::configureUsing(function (Actions\DeleteAction $action) {
+        DeleteAction::configureUsing(function (DeleteAction $action): DeleteAction {
             return $action
                 ->icon(Heroicon::Trash)
                 ->hiddenLabel()
                 ->button();
         });
 
-        Actions\ViewAction::configureUsing(function (Actions\ViewAction $action) {
+        ViewAction::configureUsing(function (ViewAction $action): ViewAction {
             return $action
                 ->icon(Heroicon::Eye)
                 ->hiddenLabel()
@@ -111,7 +133,7 @@ class AppServiceProvider extends ServiceProvider
 
     private function configureSchema(): void
     {
-        Schemas\Schema::configureUsing(function (Schemas\Schema $schema) {
+        Schema::configureUsing(function (Schema $schema): Schema {
             return $schema
                 ->defaultCurrency(config('filakit.defaultCurrency'))
                 ->defaultDateDisplayFormat(config('filakit.defaultDateDisplayFormat'))
@@ -126,83 +148,83 @@ class AppServiceProvider extends ServiceProvider
 
     private function configureForms(): void
     {
-        Forms\Components\Field::configureUsing(function (Forms\Components\Field $field) {
+        Field::configureUsing(function (Field $field): Field {
             return $field->translateLabel();
         });
 
-        Forms\Components\ToggleButtons::configureUsing(function (Forms\Components\ToggleButtons $component) {
+        ToggleButtons::configureUsing(function (ToggleButtons $component): ToggleButtons {
             return $component
                 ->inline()
                 ->grouped();
         });
 
-        Forms\Components\TextInput::configureUsing(function (Forms\Components\TextInput $component) {
+        TextInput::configureUsing(function (TextInput $component): TextInput {
             return $component->minValue(0);
         });
 
-        Forms\Components\Select::configureUsing(function (Forms\Components\Select $component) {
+        Select::configureUsing(function (Select $component): Select {
             return $component
                 ->native(false)
-                ->selectablePlaceholder(function (Forms\Components\Select $component) {
+                ->selectablePlaceholder(function (Select $component): bool {
                     return ! $component->isRequired();
                 })
-                ->searchable(function (Forms\Components\Select $component) {
+                ->searchable(function (Select $component): bool {
                     return $component->hasRelationship();
                 })
-                ->preload(function (Forms\Components\Select $component) {
+                ->preload(function (Select $component): bool {
                     return $component->isSearchable();
                 });
         });
 
-        Forms\Components\DateTimePicker::configureUsing(function (Forms\Components\DateTimePicker $component) {
+        DateTimePicker::configureUsing(function (DateTimePicker $component): DateTimePicker {
             return $component
                 ->seconds(false)
                 ->maxDate('9999-12-31T23:59');
         });
 
-        Forms\Components\Repeater::configureUsing(function (Forms\Components\Repeater $component) {
-            return $component->deleteAction(function (Actions\Action $action) {
+        Repeater::configureUsing(function (Repeater $component): Repeater {
+            return $component->deleteAction(function (Action $action): Action {
                 return $action->requiresConfirmation();
             });
         });
 
-        Forms\Components\Builder::configureUsing(function (Forms\Components\Builder $component) {
-            return $component->deleteAction(function (Actions\Action $action) {
+        Builder::configureUsing(function (Builder $component): Builder {
+            return $component->deleteAction(function (Action $action): Action {
                 return $action->requiresConfirmation();
             });
         });
 
-        Forms\Components\FileUpload::configureUsing(function (Forms\Components\FileUpload $component) {
+        FileUpload::configureUsing(function (FileUpload $component): FileUpload {
             return $component->moveFiles();
         });
 
-        Forms\Components\Textarea::configureUsing(function (Forms\Components\Textarea $component) {
+        Textarea::configureUsing(function (Textarea $component): Textarea {
             return $component->rows(4);
         });
     }
 
     private function configureInfolists(): void
     {
-        Infolists\Components\Entry::configureUsing(function (Infolists\Components\Entry $entry) {
+        Entry::configureUsing(function (Entry $entry): Entry {
             return $entry->translateLabel();
         });
     }
 
     private function configurePages(): void
     {
-        Pages\Page::$reportValidationErrorUsing = function (ValidationException $exception) {
-            Notifications\Notification::make()
+        Page::$reportValidationErrorUsing = function (ValidationException $exception): void {
+            Notification::make()
                 ->title($exception->getMessage())
                 ->danger()
                 ->send();
         };
 
-        Pages\Page::$formActionsAreSticky = false;
+        Page::$formActionsAreSticky = false;
     }
 
     private function configureTables(): void
     {
-        Tables\Table::configureUsing(function (Tables\Table $table) {
+        Table::configureUsing(function (Table $table): Table {
             return $table
                 ->defaultCurrency(config('filakit.defaultCurrency'))
                 ->defaultDateDisplayFormat(config('filakit.defaultDateDisplayFormat'))
@@ -213,21 +235,21 @@ class AppServiceProvider extends ServiceProvider
                 ->defaultTimeDisplayFormat(config('filakit.defaultTimeDisplayFormat'))
                 ->defaultIsoTimeDisplayFormat(config('filakit.defaultIsoTimeDisplayFormat'));
         });
-        Tables\Columns\Column::configureUsing(function (Tables\Columns\Column $column) {
+        Column::configureUsing(function (Column $column): Column {
             return $column->translateLabel();
         });
 
-        Tables\Table::configureUsing(function (Tables\Table $table) {
+        Table::configureUsing(function (Table $table): Table {
             return $table
                 ->filtersFormWidth('md')
                 ->paginationPageOptions([5, 10, 25, 50]);
         });
 
-        Tables\Columns\ImageColumn::configureUsing(function (Tables\Columns\ImageColumn $column) {
+        ImageColumn::configureUsing(function (ImageColumn $column): ImageColumn {
             return $column->extraImgAttributes(['loading' => 'lazy']);
         });
 
-        Tables\Filters\SelectFilter::configureUsing(function (Tables\Filters\SelectFilter $filter) {
+        SelectFilter::configureUsing(function (SelectFilter $filter): SelectFilter {
             return $filter->native(false);
         });
     }

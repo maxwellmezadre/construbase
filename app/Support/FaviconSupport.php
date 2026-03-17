@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Support;
 
 use Illuminate\Http\JsonResponse;
@@ -9,16 +11,17 @@ use Illuminate\Support\Facades\Vite;
 
 abstract class FaviconSupport
 {
-    public static function routes(): void
+    final public static function routes(): void
     {
         if (config('filakit.favicon.enabled', false)) {
-            Route::any('manifest.json', fn () => self::getManifestJson());
-            Route::any('browserconfig.xml', fn () => self::getBrowserConfigXml());
-            if (! empty(config('filakit.favicon.logo'))) {
-                Route::any('logo.png', fn () => self::getLogo());
+            Route::any('manifest.json', fn (): JsonResponse => self::getManifestJson());
+            Route::any('browserconfig.xml', fn (): Response => self::getBrowserConfigXml());
+            if (filled(config('filakit.favicon.logo'))) {
+                Route::any('logo.png', fn (): Response => self::getLogo());
             }
-            if (! empty(config('filakit.favicon.favicon'))) {
-                Route::any('favicon.ico', fn () => self::getFavicon());
+
+            if (filled(config('filakit.favicon.favicon'))) {
+                Route::any('favicon.ico', fn (): Response => self::getFavicon());
             }
         }
     }

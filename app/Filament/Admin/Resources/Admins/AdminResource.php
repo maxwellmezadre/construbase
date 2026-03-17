@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Admin\Resources\Admins;
 
 use App\Filament\Admin\Resources\Admins\Pages\CreateAdmin;
@@ -19,7 +21,7 @@ use Illuminate\Support\Facades\Cache;
 
 use function __;
 
-class AdminResource extends Resource
+final class AdminResource extends Resource
 {
     protected static ?string $model = Admin::class;
 
@@ -54,12 +56,12 @@ class AdminResource extends Resource
         return __('Admins');
     }
 
-    public static function getNavigationGroup(): ?string
+    public static function getNavigationGroup(): string
     {
         return __('Management');
     }
 
-    public static function getNavigationBadge(): ?string
+    public static function getNavigationBadge(): string
     {
         return (string) Cache::rememberForever('admins_count', fn () => Admin::query()->count());
     }

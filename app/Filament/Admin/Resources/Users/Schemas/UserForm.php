@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Admin\Resources\Users\Schemas;
 
 use Filament\Forms\Components\TextInput;
@@ -9,7 +11,7 @@ use Filament\Schemas\Schema;
 
 use function filled;
 
-class UserForm
+final class UserForm
 {
     public static function configure(Schema $schema): Schema
     {
@@ -34,7 +36,7 @@ class UserForm
                         TextInput::make('password')
                             ->password()
                             ->required(fn (string $context): bool => $context === 'create')
-                            ->dehydrated(fn ($state) => filled($state))
+                            ->dehydrated(fn ($state): bool => filled($state))
                             ->minLength(6),
                     ]),
             ]);

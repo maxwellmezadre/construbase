@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\App\Pages\Auth;
 
-class Login extends \Filament\Auth\Pages\Login
+final class Login extends \Filament\Auth\Pages\Login
 {
     protected function getCredentialsFromFormData(array $data): array
     {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Admin\Resources\Admins\Tables;
 
 use Filament\Actions\DeleteAction;
@@ -9,7 +11,7 @@ use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
-class AdminsTable
+final class AdminsTable
 {
     public static function configure(Table $table): Table
     {

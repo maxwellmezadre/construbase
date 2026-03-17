@@ -1,17 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Observers;
 
 use App\Models\Admin;
 use Illuminate\Support\Facades\Cache;
 use Psr\SimpleCache\InvalidArgumentException;
 
-class AdminObserver
+final class AdminObserver
 {
     /**
      * Handle the Admin "created" event.
      */
-    public function created(Admin $admin): void
+    public function created(): void
     {
         try {
             Cache::delete('admins_count');
@@ -22,7 +24,7 @@ class AdminObserver
     /**
      * Handle the Admin "updated" event.
      */
-    public function updated(Admin $admin): void
+    public function updated(): void
     {
         //
     }
@@ -30,7 +32,7 @@ class AdminObserver
     /**
      * Handle the Admin "deleted" event.
      */
-    public function deleted(Admin $admin): void
+    public function deleted(): void
     {
         try {
             Cache::delete('admins_count');
@@ -41,7 +43,7 @@ class AdminObserver
     /**
      * Handle the Admin "restored" event.
      */
-    public function restored(Admin $admin): void
+    public function restored(): void
     {
         //
     }
@@ -49,7 +51,7 @@ class AdminObserver
     /**
      * Handle the Admin "force deleted" event.
      */
-    public function forceDeleted(Admin $admin): void
+    public function forceDeleted(): void
     {
         //
     }

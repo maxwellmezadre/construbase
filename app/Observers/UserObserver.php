@@ -1,17 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Observers;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Cache;
 use Psr\SimpleCache\InvalidArgumentException;
 
-class UserObserver
+final class UserObserver
 {
     /**
      * Handle the User "created" event.
      */
-    public function created(User $user): void
+    public function created(): void
     {
         try {
             Cache::delete('users_count');
@@ -22,7 +24,7 @@ class UserObserver
     /**
      * Handle the User "updated" event.
      */
-    public function updated(User $user): void
+    public function updated(): void
     {
         //
     }
@@ -30,7 +32,7 @@ class UserObserver
     /**
      * Handle the User "deleted" event.
      */
-    public function deleted(User $user): void
+    public function deleted(): void
     {
         try {
             Cache::delete('users_count');
@@ -41,7 +43,7 @@ class UserObserver
     /**
      * Handle the User "restored" event.
      */
-    public function restored(User $user): void
+    public function restored(): void
     {
         //
     }
@@ -49,7 +51,7 @@ class UserObserver
     /**
      * Handle the User "force deleted" event.
      */
-    public function forceDeleted(User $user): void
+    public function forceDeleted(): void
     {
         //
     }

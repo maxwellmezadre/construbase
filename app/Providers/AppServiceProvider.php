@@ -12,6 +12,8 @@ use Filament\Actions\ActionGroup;
 use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
+use Filament\Actions\Exports\Models\Export;
+use Filament\Actions\Imports\Models\Import;
 use Filament\Actions\ViewAction;
 use Filament\Forms\Components\Builder;
 use Filament\Forms\Components\DateTimePicker;
@@ -80,6 +82,9 @@ final class AppServiceProvider extends ServiceProvider
             URL::forceHttps();
             Vite::useAggressivePrefetching();
         }
+
+        Import::polymorphicUserRelationship();
+        Export::polymorphicUserRelationship();
 
         Model::automaticallyEagerLoadRelationships();
 

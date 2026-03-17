@@ -15,6 +15,23 @@ final class RolesAndPermissionsSeeder extends Seeder
     {
         resolve(PermissionRegistrar::class)->forgetCachedPermissions();
 
+        foreach ([
+            'ViewAny:Product',
+            'View:Product',
+            'Create:Product',
+            'Update:Product',
+            'Delete:Product',
+            'DeleteAny:Product',
+            'Restore:Product',
+            'RestoreAny:Product',
+            'ForceDelete:Product',
+            'ForceDeleteAny:Product',
+            'Replicate:Product',
+            'Reorder:Product',
+        ] as $permissionName) {
+            Permission::findOrCreate($permissionName, 'admin');
+        }
+
         $superAdminRole = Role::findOrCreate('super_admin', 'admin');
 
         $adminPermissions = Permission::query()

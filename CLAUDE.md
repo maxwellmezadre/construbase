@@ -108,6 +108,7 @@ This project has domain-specific skills available. You MUST activate the relevan
 
 # PHP
 
+- Always use strict typing at the head of a `.php` file: `declare(strict_types=1);`.
 - Always use curly braces for control structures, even for single-line bodies.
 
 ## Constructors
@@ -450,7 +451,6 @@ perf: cache product listing query
 ci: add GitHub Actions workflow
 revert: revert login redirect change
 ```
-
 
 ## Tests
 

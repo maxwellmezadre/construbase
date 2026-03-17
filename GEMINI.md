@@ -56,42 +56,6 @@ This project has domain-specific skills available. You MUST activate the relevan
 
 - You must only create documentation files if explicitly requested by the user.
 
-## Before Every Commit
-
-Run these commands in order and fix all errors before committing:
-
-```bash
-vendor/bin/rector process --no-progress-bar
-vendor/bin/pint --config=pint.json
-vendor/bin/phpstan analyse --no-progress
-```
-
-- Rector: refactors code automatically — just run it
-- Pint: formats code automatically — just run it
-- PHPStan: fix every error it reports; do not suppress with baselines or `@phpstan-ignore`
-
-## Git Commits
-
-- ALWAYS use Conventional Commits format: `type: description`
-- No scope — never use parentheses: `feat(scope): ...` is WRONG
-- Single line only — no body, no footer, no Co-Authored-By, nothing else
-- Always in English
-- Use imperative mood, lowercase, no period at the end
-- Allowed types: `feat`, `fix`, `refactor`, `chore`, `docs`, `test`, `style`, `perf`, `ci`, `revert`
-
-Examples:
-```
-feat: add user authentication
-fix: resolve null pointer on login
-refactor: extract payment logic into service
-chore: update composer dependencies
-test: add unit tests for invoice model
-docs: update README with setup instructions
-style: format code with pint
-perf: cache product listing query
-ci: add GitHub Actions workflow
-revert: revert login redirect change
-```
 
 ## Replies
 
@@ -450,3 +414,40 @@ livewire(ListUsers::class)
 - **Never assume full-width layout.** `Grid`, `Section`, and `Fieldset` do not span all columns by default. Explicitly set column spans when needed.
 
 </laravel-boost-guidelines>
+## Before Every Commit
+
+Run these commands in order and fix all errors before committing:
+
+```bash
+vendor/bin/rector process --no-progress-bar
+vendor/bin/pint --config=pint.json
+vendor/bin/phpstan analyse --no-progress
+```
+
+- Rector: refactors code automatically — just run it
+- Pint: formats code automatically — just run it
+- PHPStan: fix every error it reports; do not suppress with baselines or `@phpstan-ignore`
+
+## Git Commits
+
+- ALWAYS use Conventional Commits format: `type: description`
+- No scope — never use parentheses: `feat(scope): ...` is WRONG
+- Single line only — no body, no footer, no Co-Authored-By, nothing else
+- Always in English
+- Use imperative mood, lowercase, no period at the end
+- Allowed types: `feat`, `fix`, `refactor`, `chore`, `docs`, `test`, `style`, `perf`, `ci`, `revert`
+
+Examples:
+```
+feat: add user authentication
+fix: resolve null pointer on login
+refactor: extract payment logic into service
+chore: update composer dependencies
+test: add unit tests for invoice model
+docs: update README with setup instructions
+style: format code with pint
+perf: cache product listing query
+ci: add GitHub Actions workflow
+revert: revert login redirect change
+```
+

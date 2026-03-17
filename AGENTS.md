@@ -421,6 +421,7 @@ Run these commands in order and fix all errors before committing:
 vendor/bin/rector process --no-progress-bar
 vendor/bin/pint --config=pint.json
 vendor/bin/phpstan analyse --no-progress
+php artisan test --compact
 ```
 
 - Rector: refactors code automatically — just run it
@@ -450,3 +451,11 @@ ci: add GitHub Actions workflow
 revert: revert login redirect change
 ```
 
+
+## Tests
+
+- ALWAYS run the full test suite before committing and ensure all tests pass.
+- Never commit with failing tests.
+- Run: `php artisan test --compact`
+
+If tests fail, fix the root cause — do not delete or skip tests without approval.

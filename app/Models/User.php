@@ -28,6 +28,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Override;
+use Spatie\Permission\Traits\HasRoles;
 
 /**
  * @property int $id
@@ -73,8 +74,11 @@ final class User extends Model implements AuthenticatableContract, AuthorizableC
     use Authorizable;
     use CanResetPassword;
     use HasFactory;
+    use HasRoles;
     use MustVerifyEmail;
     use Notifiable;
+
+    protected string $guard_name = 'web';
 
     #[Override]
     protected $fillable = [

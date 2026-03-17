@@ -29,6 +29,10 @@ final class UsersTable
                     ->searchable()
                     ->sortable()
                     ->toggleable(),
+                TextColumn::make('roles.name')
+                    ->badge()
+                    ->separator(',')
+                    ->label(__('Roles')),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

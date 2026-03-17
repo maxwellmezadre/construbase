@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
-use App\Models\User;
+use App\Models\Admin;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Spatie\Permission\Models\Role;
 
 /**
- * @extends Factory<User>
+ * @extends Factory<Admin>
  */
 final class AdminFactory extends Factory
 {
@@ -43,5 +44,14 @@ final class AdminFactory extends Factory
         return $this->state(fn (array $attributes): array => [
             'email_verified_at' => null,
         ]);
+    }
+
+    public function superAdmin(): static
+    {
+        return $this->afterCreating(function (Admin $admin): void {
+            Role::findOrCreate('super_admin', 'admin');
+
+            $admin->assignRole('super_admin');
+        });
     }
 }

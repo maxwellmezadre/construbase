@@ -27,6 +27,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Override;
+use Spatie\Permission\Traits\HasRoles;
 
 /**
  * @property int $id
@@ -72,8 +73,11 @@ final class Admin extends Model implements AuthenticatableContract, Authorizable
     use Authorizable;
     use CanResetPassword;
     use HasFactory;
+    use HasRoles;
     use MustVerifyEmail;
     use Notifiable;
+
+    protected string $guard_name = 'admin';
 
     #[Override]
     protected $fillable = [

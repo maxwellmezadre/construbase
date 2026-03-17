@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Spatie\Permission\Models\Role;
 
 /**
  * @extends Factory<User>
@@ -43,5 +44,34 @@ final class UserFactory extends Factory
         return $this->state(fn (array $attributes): array => [
             'email_verified_at' => null,
         ]);
+    }
+
+    public function admin(): static
+    {
+        return $this->withRole('admin');
+    }
+
+    public function budgeteer(): static
+    {
+        return $this->withRole('budgeteer');
+    }
+
+    public function siteManager(): static
+    {
+        return $this->withRole('site_manager');
+    }
+
+    public function director(): static
+    {
+        return $this->withRole('director');
+    }
+
+    public function withRole(string $roleName): static
+    {
+        return $this->afterCreating(function (User $user) use ($roleName): void {
+            Role::findOrCreate($roleName, 'web');
+
+            $user->assignRole($roleName);
+        });
     }
 }

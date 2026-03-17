@@ -28,6 +28,10 @@ final class UserInfolist
                             ->copyable()
                             ->copyMessage('Email copied successfully!')
                             ->copyMessageDuration(1500),
+                        TextEntry::make('roles.name')
+                            ->badge()
+                            ->separator(',')
+                            ->label(__('Roles')),
                     ]),
                 AdditionalInformation::make([
                     'created_at',

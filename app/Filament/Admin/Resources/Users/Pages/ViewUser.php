@@ -8,11 +8,14 @@ use App\Filament\Admin\Resources\Users\UserResource;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Resources\Pages\ViewRecord;
+use Override;
 
 final class ViewUser extends ViewRecord
 {
+    #[Override]
     protected static string $resource = UserResource::class;
 
+    #[Override]
     protected function getHeaderActions(): array
     {
         return [

@@ -8,11 +8,14 @@ use App\Filament\Admin\Resources\Admins\AdminResource;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\ViewAction;
 use Filament\Resources\Pages\EditRecord;
+use Override;
 
 final class EditAdmin extends EditRecord
 {
+    #[Override]
     protected static string $resource = AdminResource::class;
 
+    #[Override]
     protected function getHeaderActions(): array
     {
         return [

@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace App\Filament\App\Pages\Auth;
 
+use Override;
+
 final class Login extends \Filament\Auth\Pages\Login
 {
+    #[Override]
     protected function getCredentialsFromFormData(array $data): array
     {
         return [

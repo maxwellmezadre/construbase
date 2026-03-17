@@ -27,6 +27,7 @@ use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
+use Override;
 
 /**
  * @property int $id
@@ -75,6 +76,7 @@ final class User extends Model implements AuthenticatableContract, AuthorizableC
     use MustVerifyEmail;
     use Notifiable;
 
+    #[Override]
     protected $fillable = [
         'status',
         'name',
@@ -86,6 +88,7 @@ final class User extends Model implements AuthenticatableContract, AuthorizableC
         'theme_color',
     ];
 
+    #[Override]
     protected $hidden = [
         'password',
         'remember_token',
@@ -111,6 +114,7 @@ final class User extends Model implements AuthenticatableContract, AuthorizableC
         return $this->$avatarColumn ? Storage::url($this->$avatarColumn) : null;
     }
 
+    #[Override]
     protected function casts(): array
     {
         return [

@@ -28,3 +28,4 @@ phpstan.neon
 .output.txt
 
 .claude/settings.local.json
+/task

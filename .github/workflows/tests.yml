@@ -32,3 +32,6 @@ jobs:
 
       - name: Run tests
         run: php artisan test --compact
+        env:
+          DB_CONNECTION: sqlite
+          DB_DATABASE: ":memory:"

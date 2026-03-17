@@ -426,12 +426,14 @@ livewire(ListUsers::class)
 Run these commands in order and fix all errors before committing:
 
 ```bash
+git pull --rebase
 vendor/bin/rector process --no-progress-bar
 vendor/bin/pint --config=pint.json
 vendor/bin/phpstan analyse --no-progress
 php artisan test --compact
 ```
 
+- ALWAYS run `git pull --rebase` before any commit to sync with the remote branch first.
 - Rector: refactors code automatically — just run it
 - Pint: formats code automatically — just run it
 - PHPStan: fix every error it reports; do not suppress with baselines or `@phpstan-ignore`

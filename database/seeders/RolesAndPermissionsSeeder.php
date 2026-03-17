@@ -13,7 +13,7 @@ final class RolesAndPermissionsSeeder extends Seeder
 {
     public function run(): void
     {
-        app(PermissionRegistrar::class)->forgetCachedPermissions();
+        resolve(PermissionRegistrar::class)->forgetCachedPermissions();
 
         $superAdminRole = Role::findOrCreate('super_admin', 'admin');
 

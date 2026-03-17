@@ -77,8 +77,6 @@ final class Admin extends Model implements AuthenticatableContract, Authorizable
     use MustVerifyEmail;
     use Notifiable;
 
-    protected string $guard_name = 'admin';
-
     #[Override]
     protected $fillable = [
         'status',
@@ -96,6 +94,8 @@ final class Admin extends Model implements AuthenticatableContract, Authorizable
         'password',
         'remember_token',
     ];
+
+    private string $guard_name = 'admin';
 
     public function canAccessPanel(Panel $panel): bool
     {

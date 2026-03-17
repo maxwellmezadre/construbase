@@ -6,7 +6,6 @@ namespace App\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Contracts\Auth\Authenticatable;
-use Spatie\Permission\Models\Role;
 
 final class RolePolicy
 {
@@ -17,7 +16,7 @@ final class RolePolicy
         return $authUser->can('ViewAny:Role');
     }
 
-    public function view(Authenticatable $authUser, Role $role): bool
+    public function view(Authenticatable $authUser): bool
     {
         return $authUser->can('View:Role');
     }
@@ -27,22 +26,22 @@ final class RolePolicy
         return $authUser->can('Create:Role');
     }
 
-    public function update(Authenticatable $authUser, Role $role): bool
+    public function update(Authenticatable $authUser): bool
     {
         return $authUser->can('Update:Role');
     }
 
-    public function delete(Authenticatable $authUser, Role $role): bool
+    public function delete(Authenticatable $authUser): bool
     {
         return $authUser->can('Delete:Role');
     }
 
-    public function restore(Authenticatable $authUser, Role $role): bool
+    public function restore(Authenticatable $authUser): bool
     {
         return $authUser->can('Restore:Role');
     }
 
-    public function forceDelete(Authenticatable $authUser, Role $role): bool
+    public function forceDelete(Authenticatable $authUser): bool
     {
         return $authUser->can('ForceDelete:Role');
     }
@@ -57,7 +56,7 @@ final class RolePolicy
         return $authUser->can('RestoreAny:Role');
     }
 
-    public function replicate(Authenticatable $authUser, Role $role): bool
+    public function replicate(Authenticatable $authUser): bool
     {
         return $authUser->can('Replicate:Role');
     }

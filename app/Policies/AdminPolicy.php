@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Policies;
 
-use App\Models\Admin;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Contracts\Auth\Authenticatable;
 
@@ -17,7 +16,7 @@ final class AdminPolicy
         return $authUser->can('ViewAny:Admin');
     }
 
-    public function view(Authenticatable $authUser, Admin $admin): bool
+    public function view(Authenticatable $authUser): bool
     {
         return $authUser->can('View:Admin');
     }
@@ -27,22 +26,22 @@ final class AdminPolicy
         return $authUser->can('Create:Admin');
     }
 
-    public function update(Authenticatable $authUser, Admin $admin): bool
+    public function update(Authenticatable $authUser): bool
     {
         return $authUser->can('Update:Admin');
     }
 
-    public function delete(Authenticatable $authUser, Admin $admin): bool
+    public function delete(Authenticatable $authUser): bool
     {
         return $authUser->can('Delete:Admin');
     }
 
-    public function restore(Authenticatable $authUser, Admin $admin): bool
+    public function restore(Authenticatable $authUser): bool
     {
         return $authUser->can('Restore:Admin');
     }
 
-    public function forceDelete(Authenticatable $authUser, Admin $admin): bool
+    public function forceDelete(Authenticatable $authUser): bool
     {
         return $authUser->can('ForceDelete:Admin');
     }
@@ -57,7 +56,7 @@ final class AdminPolicy
         return $authUser->can('RestoreAny:Admin');
     }
 
-    public function replicate(Authenticatable $authUser, Admin $admin): bool
+    public function replicate(Authenticatable $authUser): bool
     {
         return $authUser->can('Replicate:Admin');
     }

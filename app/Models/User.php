@@ -78,8 +78,6 @@ final class User extends Model implements AuthenticatableContract, AuthorizableC
     use MustVerifyEmail;
     use Notifiable;
 
-    protected string $guard_name = 'web';
-
     #[Override]
     protected $fillable = [
         'status',
@@ -97,6 +95,8 @@ final class User extends Model implements AuthenticatableContract, AuthorizableC
         'password',
         'remember_token',
     ];
+
+    private string $guard_name = 'web';
 
     /**
      * @throws Exception
